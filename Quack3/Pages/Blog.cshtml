@@ -1,0 +1,355 @@
+﻿@page
+@model Quack3.Pages.BlogModel
+@{
+}
+
+<div class="outer-container">
+     <header class="site-header">
+        <div class="top-header-bar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 flex align-items-center">
+                        <div class="header-bar-text d-none d-lg-block">
+                            <p>Hello world, My name is Blanca</p>
+                        </div><!-- .header-bar-text -->
+
+                        <div class="header-bar-email d-none d-lg-block">
+                            <a href="mailto:@Request.Cookies["email"]">@Request.Cookies["email"]</a>
+                        </div><!-- .header-bar-email -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-lg-6 flex justify-content-between justify-content-lg-end align-items-center">
+                        <div class="header-bar-social d-none d-md-block">
+                            <ul class="flex align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .header-bar-social -->
+
+                        <div class="header-bar-search d-none d-md-block">
+                            <form>
+                                <input type="search" placeholder="Search">
+                            </form>
+                        </div><!-- .header-bar-search -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .top-header-bar -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="site-branding flex flex-column align-items-center">
+                        <h1 class="site-title"><a href="index" rel="home">Blanca</a></h1>
+                        <p class="site-description">Personal Blog</p>
+                    </div><!-- .site-branding -->
+
+                    <nav class="site-navigation">
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+
+                        <ul class="flex-lg flex-lg-row justify-content-lg-center align-content-lg-center">
+                            <li class="current-menu-item"><a href="index">Home</a></li>
+                            @{
+                                if (Request.Cookies["isAdmin"] == "True")
+                                {
+                                    <li><a href="admin">Admin Dashboard</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="contact">Contact</a></li>
+                                }
+                            }
+                            <li><a href="myProfile">My Profile</a></li>
+                            <li><a href="about">About me</a></li>
+                            @{
+                                if (string.IsNullOrEmpty(Request.Cookies["userID"]))
+                                {
+                                    <li><a href="Login">Login</a></li>
+                                    <li><a href="Register">Register</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="Logout">Logout</a></li>
+                                }
+                            }
+                            </ul>
+
+                        <div class="header-bar-social d-md-none">
+                            <ul class="flex justify-content-center align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .header-bar-social -->
+
+                        <div class="header-bar-search d-md-none">
+                            <form>
+                                <input type="search" placeholder="Search">
+                            </form>
+                        </div><!-- .header-bar-search -->
+                    </nav><!-- .site-navigation -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </header><!-- .site-header -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-header flex justify-content-center align-items-center" style="background-image: url('images/blog-bg.jpg')">
+                    <h1>The Story</h1>
+                </div><!-- .page-header -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+
+        <div class="container">
+            <div class="row">
+                <div class="offset-lg-9 col-lg-3">
+                    <a href="https://www.youtube.com">
+                        <div class="yt-subscribe">
+                            <img src="images/yt-subscribe.png" alt="Youtube Subscribe" name="userImage">
+                            <h3 name="username">Blanca Smith</h3>
+                        </div><!-- .yt-subscribe -->
+                    </a>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .hero-section -->
+
+    <div class="container single-page blog-page">
+        <div class="row">
+            <div class="col-12">
+                @foreach (var item in Model.listPost)
+                {
+                    <div class="content-wrap">
+                        <header class="entry-header">
+                            <div class="posted-date" name="postDate">
+                                @item.postDate
+                            </div><!-- .posted-date -->
+
+                            <h2 class="entry-title" name="postTitle">@item.postTitle</h2>
+						    @if (Request.Cookies["isAdmin"] == "True")
+                                {
+                                    <div class="menu-nav">
+                                        <div class="dropdown-container" tabindex="-1">
+                                            <div class="three-dots"></div>
+                                            <div class="dropdown" style="margin-right: 500px;">
+                                                <a href="ModifyPost?postID=@item.postID" style="color:white;">Modify Post</a><br>
+                                                <a href="DeletePost?postID=@item.postID">Delete Post</a><br>
+                                                <a href="PinPost?postID=@item.postID" style="border-bottom:0px solid #74797e">Pin Post</a><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+						    <div class="posted-date" name="reach">
+                                Seen @item.postReach times
+                            </div><!-- .posted-date -->
+
+                            <div class="tags-links">
+                                <a href="#">#winter</a>
+                                <a href="#">#love</a>
+                                <a href="#">#snow</a>
+                                <a href="#">#january</a>
+                            </div><!-- .tags-links -->
+                        </header><!-- .entry-header -->
+
+                        <figure class="featured-image">
+                            <img src="@item.postImage" alt="" style="max-width:1146px; max-height=:666px; min-width:552px; min-height:333;">
+                        </figure><!-- .featured-image -->
+
+                        <div class="entry-content">
+                            <h3 name="postText" style="text-align:left;">@item.postText</h3>
+
+                        </div><!-- .entry-content -->
+
+                    
+
+                    
+
+                        <footer class="entry-footer flex flex-column flex-lg-row justify-content-between align-content-start align-lg-items-center">
+                            <ul class="post-share flex align-items-center order-3 order-lg-1">
+                                <label>Share</label>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            </ul><!-- .post-share -->
+
+                            <div class="comments-count order-1 order-lg-3">
+                                <a href="#comments-title">@Model.NoComments Comments</a>
+                            </div><!-- .comments-count -->
+                        </footer><!-- .entry-footer -->
+                    </div><!-- .content-wrap -->
+                }
+
+                <div class="content-area">
+                    <div class="post-comments">
+                        <h3 class="comments-title" id="comments-title">Comments</h3>
+
+                        <ol class="comment-list">
+                            @foreach (var item in Model.listComment)
+                            {
+                                <li class="comment">
+                                    <div class="comment-body flex justify-content-between">
+                                        <figure class="comment-author-avatar">
+                                            <img src="@item.userImage" alt="user" style="border-radius:50px;">
+                                        </figure><!-- .comment-author-avatar -->
+
+                                        <div class="comment-wrap">
+                                            <div class="comment-author flex flex-wrap align-items-center">
+                                                <span class="fn">
+                                                    <a href="#" name="commentorName">@item.username</a>
+                                                </span><!-- .fn -->
+
+                                                <span class="reply">
+                                                    <a href="#" name="commentDate">@item.commentDate</a>
+                                                </span><!-- .comment-meta -->
+
+                                            
+                                            </div><!-- .comment-author -->
+
+                                            <p name="commentText">@item.commentText</p>
+
+                                        </div><!-- .comment-wrap -->
+                                    </div><!-- .comment-body -->
+                                </li><!-- .comment -->
+                            }
+                        </ol><!-- .comment-list -->
+                    </div><!-- .post-comments -->
+
+                    <div class="comments-form">
+                        <div class="comment-respond">
+                            <h3 class="comment-reply-title">Leave a comment</h3>
+
+                            <form class="comment-form" method="post">
+                                <textarea required rows="18" cols="6" placeholder="Write your comment here" name="commentText"></textarea>
+                                <input type="submit" value="Post Comment">
+                            </form><!-- .comment-form -->
+                        </div><!-- .comment-respond -->
+                    </div><!-- .comments-form -->
+                </div><!-- .content-area -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+</div><!-- .outer-container -->
+
+<footer class="sit-footer">
+    <div class="outer-container">
+        <div class="container-fluid">
+            <div class="row footer-recent-posts">
+                @foreach (var item in Model.listPosts)
+                {
+                    <div class="col-12 col-md-6 col-xl-3">
+                        <div class="footer-post-wrap flex justify-content-between">
+                            <figure>
+                                <a href="#"><img src="@item.postImage" alt="" style="width:185px; height:185px;"></a>
+                            </figure>
+
+                            <div class="footer-post-cont flex flex-column justify-content-between">
+                                <header class="entry-header">
+                                    <div class="posted-date">
+                                        @item.postDate
+                                    </div><!-- .entry-header -->
+
+                                    <h3><a href="#">@item.postTitle</a></h3>
+
+                                    <div class="tags-links">
+                                        <a href="#">#winter</a>
+                                        <a href="#">#love</a>
+                                        <a href="#">#snow</a>
+                                        <a href="#">#january</a>
+                                    </div><!-- .tags-links -->
+                                </header><!-- .entry-header -->
+
+                                <footer class="entry-footer">
+                                    <a class="read-more" href="#">read more</a>
+                                </footer><!-- .entry-footer -->
+                            </div><!-- .footer-post-cont -->
+                        </div><!-- .footer-post-wrap -->
+                    </div><!-- .col -->
+                }
+
+                
+            </div><!-- .row -->
+        </div><!-- .container-fluid -->
+    </div><!-- .outer-container -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="footer-instagram flex flex-wrap flex-lg-nowrap">
+                <figure>
+                    <a href="#"><img src="images/a.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/b.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/c.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/d.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/f.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/g.jpg" alt=""></a>
+                </figure>
+				
+				<figure>
+                    <a href="#"><img src="images/h.jpg" alt=""></a>
+                </figure>
+				
+				
+            </div>
+        </div><!-- .row -->
+    </div><!-- .container -->
+
+    <div class="footer-bar">
+        <div class="outer-container">
+            <div class="container-fluid">
+                <div class="row justify-content-between">
+                    <div class="col-12 col-md-6">
+                        <div class="footer-copyright">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by: <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div><!-- .footer-copyright -->
+                    </div><!-- .col-xl-4 -->
+
+                    <div class="col-12 col-md-6">
+                        <div class="footer-social">
+                            <ul class="flex justify-content-center justify-content-md-end align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .footer-social -->
+                    </div><!-- .col-xl-4 -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .outer-container -->
+    </div><!-- .footer-bar -->
+</footer><!-- .sit-footer -->
+
+<script type='text/javascript' src='js/jquery.js'></script>
+<script type='text/javascript' src='js/swiper.min.js'></script>
+<script type='text/javascript' src='js/custom.js'></script>

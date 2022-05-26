@@ -1,0 +1,282 @@
+﻿@page
+@model Quack3.Pages.siteUsersModel
+@{
+}
+
+<div class="outer-container">
+    <header class="site-header">
+        <div class="top-header-bar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 flex align-items-center">
+                        <div class="header-bar-text d-none d-lg-block">
+                            <p>Hello world, My name is Blanca</p>
+                        </div><!-- .header-bar-text -->
+
+                        <div class="header-bar-email d-none d-lg-block">
+                            <a href="mailto:@Request.Cookies["email"]">@Request.Cookies["email"]</a>
+                        </div><!-- .header-bar-email -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-lg-6 flex justify-content-between justify-content-lg-end align-items-center">
+                        <div class="header-bar-social d-none d-md-block">
+                            <ul class="flex align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .header-bar-social -->
+
+                        <div class="header-bar-search d-none d-md-block">
+                            <form>
+                                <input type="search" placeholder="Search">
+                            </form>
+                        </div><!-- .header-bar-search -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .top-header-bar -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="site-branding flex flex-column align-items-center">
+                        <h1 class="site-title"><a href="index" rel="home">Blanca</a></h1>
+                        <p class="site-description">Personal Blog</p>
+                    </div><!-- .site-branding -->
+
+                    <nav class="site-navigation">
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+
+                        <ul class="flex-lg flex-lg-row justify-content-lg-center align-content-lg-center">
+                            <li class="current-menu-item"><a href="index">Home</a></li>
+                            @{
+                                if (Request.Cookies["isAdmin"] == "True")
+                                {
+                                    <li><a href="admin">Admin Dashboard</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="contact">Contact</a></li>
+                                }
+                            }
+                            <li><a href="myProfile">My Profile</a></li>
+                            <li><a href="about">About me</a></li>
+                            @{
+                                if (string.IsNullOrEmpty(Request.Cookies["userID"]))
+                                {
+                                    <li><a href="Login">Login</a></li>
+                                    <li><a href="Register">Register</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="Logout">Logout</a></li>
+                                }
+                            }
+                            </ul>
+
+                        <div class="header-bar-social d-md-none">
+                            <ul class="flex justify-content-center align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .header-bar-social -->
+
+                        <div class="header-bar-search d-md-none">
+                            <form>
+                                <input type="search" placeholder="Search">
+                            </form>
+                        </div><!-- .header-bar-search -->
+                    </nav><!-- .site-navigation -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </header><!-- .site-header -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-header flex justify-content-center align-items-center" style="background-image: url('images/about-bg.jpg')">
+                    <h1>Site Users</h1>
+                </div><!-- .page-header -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+
+        <div class="container">
+            <div class="row">
+                <div class="offset-lg-9 col-lg-3">
+                    <a href="https:/www.youtube.com">
+                        <div class="yt-subscribe">
+                            <img src="images/yt-subscribe.png" alt="Youtube Subscribe">
+                            <h3>Subscribe</h3>
+                            <p>To my Youtube Channel</p>
+                        </div><!-- .yt-subscribe -->
+                    </a>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .hero-section -->
+
+    <div class="container single-page about-page">
+        <div class="row">
+            <div class="col-12">
+                <div class="content-wrap">
+                    <header class="entry-header">
+                        
+
+                        <!--<h1 class="entry-title">ABOUT</h1>-->
+
+                        
+                    </header><!-- .entry-header -->
+					<br>
+					<br>
+
+                    <div class="post-comments">
+
+                        <ol class="comment-list">
+                            @{
+                                foreach (var item in Model.listUsers)
+                                {
+                                <li class="comment">
+                                    <div class="comment-body flex justify-content-between">
+                                        <figure class="comment-author-avatar">
+                                            <img src="@item.userImage" alt="user" style="border-radius:50px">
+                                        </figure><!-- .comment-author-avatar -->
+
+                                        <div class="comment-wrap">
+                                            <div class="comment-wrap">
+                                            <div class="comment-author flex flex-wrap align-items-center">
+                                                <span class="fn">
+                                                    <a href="#" name="commentorName">@item.username</a>
+											    </span>
+											    
+                                                <form method="post">
+                                                    <button type="submit" class="btn btn-danger" value="@item.userID" name="Del" id="del">Delete Account</button>
+                                                </form>
+											    
+                                            	
+                                                <!-- .fn -->
+
+                                            
+                                            </div><!-- .comment-author -->
+
+                                            <br>
+
+
+                                        </div><!-- .comment-wrap -->
+
+										    <h6 name="commentText" align="left">
+											    <a href="mailto:@item.email" style="color: #692DD5">Send an email to this user</a>
+										    </h6>
+
+                                        </div><!-- .comment-wrap -->
+                                    </div><!-- .comment-body -->
+                                </li><!-- .comment -->
+                                }
+                            }
+                            
+                        </ol><!-- .comment-list -->
+                    </div><!-- .post-comments -->
+
+                    
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .row -->
+
+        
+
+        <div class="row">
+            <div class="col-12">
+                <footer class="entry-footer flex flex-column flex-lg-row justify-content-between align-content-start align-lg-items-center">
+
+                    
+                </footer><!-- .entry-footer -->
+            </div><!-- .content-wrap -->
+        </div><!-- .col -->
+    </div><!-- .container -->
+</div><!-- .outer-container -->
+
+<footer class="sit-footer">
+    <div class="outer-container">
+        <div class="container-fluid">
+            
+        </div><!-- .container-fluid -->
+    </div><!-- .outer-container -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="footer-instagram flex flex-wrap flex-lg-nowrap">
+                <figure>
+                    <a href="#"><img src="images/a.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/b.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/c.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/d.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/f.jpg" alt=""></a>
+                </figure>
+
+                <figure>
+                    <a href="#"><img src="images/g.jpg" alt=""></a>
+                </figure>
+				
+				<figure>
+                    <a href="#"><img src="images/h.jpg" alt=""></a>
+                </figure>
+            </div>
+        </div><!-- .row -->
+    </div><!-- .container -->
+
+    <div class="footer-bar">
+        <div class="outer-container">
+            <div class="container-fluid">
+                <div class="row justify-content-between">
+                    <div class="col-12 col-md-6">
+                        <div class="footer-copyright">
+
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by: <a href="https://themewagon.com/" target="_blank">ThemeWagon</a></p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div><!-- .footer-copyright -->
+                    </div><!-- .col-xl-4 -->
+
+                    <div class="col-12 col-md-6">
+                        <div class="footer-social">
+                            <ul class="flex justify-content-center justify-content-md-end align-items-center">
+                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div><!-- .footer-social -->
+                    </div><!-- .col-xl-4 -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .outer-container -->
+    </div><!-- .footer-bar -->
+</footer><!-- .sit-footer -->
+
+<script type='text/javascript' src='js/jquery.js'></script>
+<script type='text/javascript' src='js/swiper.min.js'></script>
+<script type='text/javascript' src='js/custom.js'></script>
