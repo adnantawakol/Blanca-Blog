@@ -27,7 +27,7 @@ namespace Quack3.Pages
         {
             if(Request.Cookies["planID"] == "2")
             {
-                SendEmail(CheckEmail(), "blancaofficial2022@gmail.com", Request.Form["subject"], CheckEmail() + "\n" + Request.Form["body"]);
+                SendEmail(CheckEmail(), "blancaofficial2022@gmail.com", Request.Form["subject"], "Sent by: "+ CheckEmail() + "\n" + Request.Form["body"]);
                 SendEmail("blancaofficial2022@gmail.com", CheckEmail(), "Email Confirmation", "Hi Dear, \n I've recieved your email and I will be getting in contact with you soon");
             }
             else
