@@ -8,14 +8,18 @@ namespace Quack3.Pages
 {
     public class ContactModel : PageModel
     {
-
+        public List<Post> listPinnedPosts = new List<Post>();
 
         public void OnGet()
         {
             if(string.IsNullOrEmpty(Request.Cookies["userID"]))
             {
                 Response.Redirect("/login");
-            }            
+            }
+            else
+            {
+                FetchPinnedPosts();
+            }
         }
 
         public void OnPost()
@@ -57,6 +61,32 @@ namespace Quack3.Pages
                 Console.WriteLine(exp.Message);
             }
         }
-        
+
+        void FetchPinnedPosts()
+        {
+            listPinnedPosts.Clear();
+            string constr = "Data Source=localhost\\MSSQLSERVER2019;Initial Catalog=Blog;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string query = "SELECT * FROM post where isPinned = 1 order by postID DESC;";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+
+                        while (sdr.Read())
+                        {
+                            listPinnedPosts.Add(new Post(sdr["postID"].ToString(), sdr["postImage"].ToString(), sdr["postTitle"].ToString(),
+                                sdr["postDate"].ToString(), sdr["postText"].ToString(), int.Parse(sdr["postReach"].ToString()) + 1, sdr["isPinned"].ToString(),
+                                int.Parse(sdr["userID"].ToString())));
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
+
     }
 }
