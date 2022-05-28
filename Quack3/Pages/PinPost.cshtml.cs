@@ -13,7 +13,7 @@ namespace Quack3.Pages
             {
                 postID1 = postID;
                 Pin();
-                Response.Redirect("/#postTitle");
+                Response.Redirect("/#postTitlee");
             }
             else
             {

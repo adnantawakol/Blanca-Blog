@@ -39,7 +39,7 @@ namespace Quack3.Pages
             {
                 //should be needed category and government
                 string query = "delete from comment where postID in (select postID from post where userID = @userID);" +
-                    "delete from account where userID = @userID; ";
+                    "delete from account where userID = @userID;";
                 using (SqlCommand cmd = new SqlCommand(query))
                 {
                     cmd.Parameters.AddWithValue("@userID", Request.Form["Del"].ToString());

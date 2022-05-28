@@ -6,6 +6,7 @@ namespace Quack3.Pages
 {
     public class WritePostModel : PageModel
     {
+        public List<Post> listPinnedPosts = new List<Post>();
         void SubmitPost()
         {
             string constr = "Data Source=localhost\\MSSQLSERVER2019;Initial Catalog=Blog;Integrated Security=True";
@@ -34,7 +35,7 @@ namespace Quack3.Pages
             }
         }
 
-        bool PostingAvailable()     //method to check if non admin user has not posted 2 times in the last 30 days
+        bool PostingAvailable()     //method to check if non admin premium user has not posted 2 times in the last 30 days
         {
             bool postingAvailable;
             int postsCount = 0;
@@ -70,6 +71,31 @@ namespace Quack3.Pages
             }
         }
 
+        void FetchPinnedPosts()
+        {
+            listPinnedPosts.Clear();
+            string constr = "Data Source=localhost\\MSSQLSERVER2019;Initial Catalog=Blog;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string query = "SELECT * FROM post where isPinned = 1 order by postID DESC;";
+                using (SqlCommand cmd = new SqlCommand(query))
+                {
+                    cmd.Connection = con;
+                    con.Open();
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+
+                        while (sdr.Read())
+                        {
+                            listPinnedPosts.Add(new Post(sdr["postID"].ToString(), sdr["postImage"].ToString(), sdr["postTitle"].ToString(),
+                                sdr["postDate"].ToString(), sdr["postText"].ToString(), int.Parse(sdr["postReach"].ToString()) + 1, sdr["isPinned"].ToString(),
+                                int.Parse(sdr["userID"].ToString())));
+                        }
+                    }
+                    con.Close();
+                }
+            }
+        }
 
         public void OnGet()
         {
@@ -77,6 +103,7 @@ namespace Quack3.Pages
             {
                 Response.Redirect("/login");
             }
+            FetchPinnedPosts();
         }
 
         public void OnPost()

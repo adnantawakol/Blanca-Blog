@@ -84,7 +84,7 @@ namespace Quack3.Pages
             string constr = "Data Source=localhost\\MSSQLSERVER2019;Initial Catalog=Blog;Integrated Security=True";
             using (SqlConnection con = new SqlConnection(constr))
             {
-                string query = "SELECT * FROM post  where isPinned = 1 order by postID DESC;";
+                string query = "SELECT * FROM post where isPinned = 1 order by postID DESC;";
                 using (SqlCommand cmd = new SqlCommand(query))
                 {
                     cmd.Connection = con;

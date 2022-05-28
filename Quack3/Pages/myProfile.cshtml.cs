@@ -94,7 +94,8 @@ namespace Quack3.Pages
             }
             else
             {
-                Response.Redirect("/myProfile");
+                ViewData["Message"] = string.Format("Passwords do not match");
+                GetProfileInfo();
 
             }
         }
