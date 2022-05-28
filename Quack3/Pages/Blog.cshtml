@@ -253,7 +253,7 @@
                     <div class="col-12 col-md-6 col-xl-3">
                         <div class="footer-post-wrap flex justify-content-between">
                             <figure>
-                                <a href="#"><img src="@item.postImage" alt="" style="width:185px; height:185px;"></a>
+                                <a href="/blog?postID=@item.postID"><img src="@item.postImage" alt="" style="width:185px; height:185px;"></a>
                             </figure>
 
                             <div class="footer-post-cont flex flex-column justify-content-between">
@@ -262,7 +262,7 @@
                                         @item.postDate
                                     </div><!-- .entry-header -->
 
-                                    <h3><a href="#">@item.postTitle</a></h3>
+                                    <h3><a href="/blog?postID=@item.postID">@item.postTitle</a></h3>
 
                                     <div class="tags-links">
                                         <a href="#">#winter</a>
@@ -273,7 +273,7 @@
                                 </header><!-- .entry-header -->
 
                                 <footer class="entry-footer">
-                                    <a class="read-more" href="#">read more</a>
+                                    <a class="read-more" href="/blog?postID=@item.postID">read more</a>
                                 </footer><!-- .entry-footer -->
                             </div><!-- .footer-post-cont -->
                         </div><!-- .footer-post-wrap -->
