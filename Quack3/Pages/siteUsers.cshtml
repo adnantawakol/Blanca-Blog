@@ -144,6 +144,7 @@
                     <div class="post-comments">
 
                         <ol class="comment-list">
+                            @{
                                 foreach (var item in Model.listUsers)
                                 {
                                 <li class="comment">
@@ -182,6 +183,7 @@
                                     </div><!-- .comment-body -->
                                 </li><!-- .comment -->
                                 }
+                            }
                             
                         </ol><!-- .comment-list -->
                     </div><!-- .post-comments -->
