@@ -63,8 +63,7 @@ namespace Quack3.Pages
             }
             else
             {
-                Console.WriteLine("Failed to login");
-                Response.Redirect("/login");
+                ViewData["Message"] = string.Format("Wrong Email or Password");
             }
         }
     }
