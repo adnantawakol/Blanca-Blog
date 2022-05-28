@@ -8,7 +8,7 @@ namespace Quack3.Pages
         public void OnGet()
         {
             Response.Cookies.Append("userID", "");
-            Response.Cookies.Append("isAdmin","" );
+            Response.Cookies.Append("isAdmin","False" );
             Response.Cookies.Append("planID", "");
             Response.Cookies.Append("email", "");
             Response.Redirect("/");
